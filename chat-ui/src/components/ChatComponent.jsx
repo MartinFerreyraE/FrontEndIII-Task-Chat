@@ -6,8 +6,11 @@ import '../index.css'
 
 const ChatComponent = ({ socket }) => {
   const [messages, setMessages] = useState([]);
+
   useEffect(() => {
-    socket.on("messageResponse", (data) => setMessages([...messages, data]));
+    socket.on("messageResponse", (data) => {
+      setMessages([...messages, data])
+    });
   // Dependencias que si no se agregan entonces useEffect no los toma en cuenta
   }, [messages, socket]); 
 
@@ -16,7 +19,10 @@ const ChatComponent = ({ socket }) => {
       <div className="chat-component">
         <ChatSideBar socket={socket}/>
         <div className="chat-component-body">
-            <ChatBody messages={messages}/>
+            <ChatBody
+             messages={messages}
+             socket={socket}
+            />
             <ChatFooter socket={socket} />
         </div>
       </div> 

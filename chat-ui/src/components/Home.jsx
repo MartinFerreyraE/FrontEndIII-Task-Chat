@@ -7,26 +7,30 @@ const Home = ({ socket }) => {
     const [userName, setUserName] = useState('');
 
     const handleSubmit = (e) => {
+        // localStorage.clear();
         e.preventDefault()
-        localStorage.setItem('userName', userName);
-        socket.on("newUser", {userName, socketID: socket.id})
+        const user = { userName: userName, socketID: socket.id };
+        localStorage.setItem('userName', JSON.stringify(user));
+        socket.emit("newUser", user);
         navigate('/chat');
     };
 
-    // useEffect(() => {
-    //   socket.emit('helloFromClient', 'this is the message from client');
-
-    //   socket.on('helloFromServer', (...args) =< {
-    //     setMessage(args);
-    //   });
-    // }, [socket])
-
-    return <form onSubmit={handleSubmit}>
+    return (
+    <form onSubmit={handleSubmit}>
+        
         <h2>Sign in to Chat</h2>
-        <label htmlFor="username">UserName</label>
-        <input type="text" name="username" id="username" value={userName} onChange={e =>  setUserName(e.target.value)} />
+        <label htmlFor="userName">UserName</label>
+        <input 
+        type="text" 
+        name="userName" 
+        id="userName" 
+        value={userName} 
+        onChange={(e) =>  setUserName(e.target.value)} 
+        />
+
         <button>Sign In</button>
-    </form>;
+    </form>
+    );
 };
 
 export default Home;

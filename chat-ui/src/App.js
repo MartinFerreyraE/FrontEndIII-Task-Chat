@@ -5,7 +5,7 @@ import Home from "./components/Home";
 
 import './App.css';
 
-const socket = socketIO.connect('http://localhost:8080');
+const socket = socketIO.connect('http://localhost:8081');
 
 function App() {
   return (
